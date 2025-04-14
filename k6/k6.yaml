@@ -44,8 +44,7 @@ stringData:
 
         sleep(3);
 
-
-    }  # Add more requests as needed
+    } 
 ---
 apiVersion: batch/v1
 kind: CronJob
