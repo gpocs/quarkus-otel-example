@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bookservice
+  labels:
+    app.kubernetes.io/name: "bookservice"
+    app.kubernetes.io/component: "bookservice"
+    app.kubernetes.io/part-of: "bookservice"
+    app.kubernetes.io/instance: "bookservice-main"
+    app.kubernetes.io/version: "1.0.3"
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  rules:
+  - host: bookservice.codersandbox.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bookservice
+            port:
+              number: 8080
