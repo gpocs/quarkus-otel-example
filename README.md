@@ -66,8 +66,8 @@ Logs query, with namespace
 
 Logs query formatting
 ```
-json | line_format `
-{{if .mdc_traceId }}traceid={{.mdc_traceId}} {{end}}
-{{if .level }}{{ .message }}{{else}}{{ __line__ }} {{end}}
-`
+json | line_format 
+`{{if .level }}level={{.level}}{{end}} {{if .mdc_traceId }}traceid={{.mdc_traceId}}{{end}} {{if .message }}{{ .message }}{{else}}{{ __line__ }}{{end}}`
 ````
+
+![logs config](images/logsconfig.png)
