@@ -51,3 +51,23 @@ mvn clean package -f orderservice/pom.xml
 docker build -f orderservice/src/main/docker/Dockerfile.jvm -t alainpham/orderservice:1.0.1 orderservice
 docker push alainpham/orderservice:1.0.1
 ```
+
+## Gcloud config
+
+Logs query, without namespace
+```
+{service_name="$serviceName"}
+```
+
+Logs query, with namespace
+```
+{namespace="$serviceNamespace", service_name="$serviceName"}
+```
+
+Logs query formatting
+```
+json | line_format `
+{{if .mdc_traceId }}traceid={{.mdc_traceId}} {{end}}
+{{if .level }}{{ .message }}{{else}}{{ __line__ }} {{end}}
+`
+````

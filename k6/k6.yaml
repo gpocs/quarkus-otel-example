@@ -61,7 +61,7 @@ spec:
         spec:
           containers:
           - name: k6
-            image: "${CONTAINER_REGISTRY}/k6:0.58.0"
+            image: "grafana/k6:0.58.0"
             args: ["run", "/scripts/script.js"]
             imagePullPolicy: IfNotPresent
             env:
