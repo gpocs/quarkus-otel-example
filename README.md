@@ -15,7 +15,7 @@ kubectl apply -f https://raw.githubusercontent.com/gpocs/quarkus-otel-example/re
 ## Deploy k6 for continuos testing
 
 ```sh
-
+kubectl apply -f https://raw.githubusercontent.com/gpocs/quarkus-otel-example/refs/heads/master/orderservice/src/main/k6/k6.yaml
 ```
 
 ## Ingress deployment (optional)
