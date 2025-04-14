@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: orderservice
+  labels:
+    app.kubernetes.io/name: "orderservice"
+    app.kubernetes.io/component: "orderservice"
+    app.kubernetes.io/part-of: "orderservice"
+    app.kubernetes.io/instance: "orderservice-main"
+    app.kubernetes.io/version: "1.0.3"
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  rules:
+  - host: orderservice.codersandbox.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: orderservice
+            port:
+              number: 8080

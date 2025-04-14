@@ -15,5 +15,9 @@ docker push alainpham/orderservice:1.0.1
 # Deploy kubernetes
 
 ```sh
+kubectl apply -f https://raw.githubusercontent.com/gpocs/quarkus-otel-example/refs/heads/master/bookservice/src/main/kube/bookservice.yaml
+
+kubectl apply -f https://raw.githubusercontent.com/gpocs/quarkus-otel-example/refs/heads/master/orderservice/src/main/kube/orderservice.yaml
+
 
 ```

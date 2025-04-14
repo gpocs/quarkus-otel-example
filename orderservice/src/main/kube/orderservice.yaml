@@ -1,0 +1,103 @@
+---
+# Deployment descriptor
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: "orderservice"
+    app.kubernetes.io/component: "orderservice"
+    app.kubernetes.io/part-of: "orderservice"
+    app.kubernetes.io/instance: "orderservice-main"
+    app.kubernetes.io/version: "1.0.1"
+  name: "orderservice"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "orderservice"
+      app.kubernetes.io/component: "orderservice"
+      app.kubernetes.io/part-of: "orderservice"
+      app.kubernetes.io/instance: "orderservice-main"
+      app.kubernetes.io/version: "1.0.1"
+  template:
+    metadata:
+      annotations:
+        k8s.grafana.com/scrape: "true"
+      labels:
+        app.kubernetes.io/name: "orderservice"
+        app.kubernetes.io/component: "orderservice"
+        app.kubernetes.io/part-of: "orderservice"
+        app.kubernetes.io/instance: "orderservice-main"
+        app.kubernetes.io/version: "1.0.1"
+    spec:
+      containers:
+      - name: orderservice
+        image: "alainpham/orderservice:1.0.1"
+        imagePullPolicy: "Always"
+        env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT
+            value: "http://grafana-k8s-monitoring-alloy-receiver.agents.svc.cluster.local:4318"
+          - name: QUARKUS_OTEL_RESOURCE_ATTRIBUTES
+            value: "service.name=orderservice,service.namespace=$(POD_NAMESPACE),service.instance.id=$(POD_NAME),service.version=1.0.1"
+        livenessProbe:
+          httpGet:
+            path: "/health/live"
+            port: 8080
+            scheme: "HTTP"
+          initialDelaySeconds: 0
+          successThreshold: 1
+          periodSeconds: 10
+          failureThreshold: 40 
+        readinessProbe:
+          httpGet:
+            path: "/health/ready"
+            port: 8080
+            scheme: "HTTP"
+          initialDelaySeconds: 0
+          successThreshold: 1
+          periodSeconds: 10
+          failureThreshold: 40 
+        resources:
+          # limits:
+          #   cpu: "1.0"
+          #   memory: "1024Mi"
+          # requests:
+          #   cpu: "0.2"
+          #   memory: "128Mi"
+        ports:
+          - containerPort: 8080
+        volumeMounts:
+      volumes:
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  labels:
+    app.kubernetes.io/name: "orderservice"
+    app.kubernetes.io/component: "orderservice"
+    app.kubernetes.io/part-of: "orderservice"
+    app.kubernetes.io/instance: "orderservice-main"
+    app.kubernetes.io/version: "1.0.1"
+  name: "orderservice"
+spec:
+  type: ClusterIP
+  ports:
+  - name: "http"
+    port: 8080
+    protocol: "TCP"
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/name: "orderservice"
+    app.kubernetes.io/component: "orderservice"
+    app.kubernetes.io/part-of: "orderservice"
+    app.kubernetes.io/instance: "orderservice-main"
+    app.kubernetes.io/version: "1.0.1"
+---
