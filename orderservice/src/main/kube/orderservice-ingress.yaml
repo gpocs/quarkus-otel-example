@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/component: "orderservice"
     app.kubernetes.io/part-of: "orderservice"
     app.kubernetes.io/instance: "orderservice-main"
-    app.kubernetes.io/version: "1.0.3"
+    app.kubernetes.io/version: "1.0.1"
   annotations:
     nginx.ingress.kubernetes.io/ssl-passthrough: "false"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"

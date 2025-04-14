@@ -19,5 +19,5 @@ kubectl apply -f https://raw.githubusercontent.com/gpocs/quarkus-otel-example/re
 
 kubectl apply -f https://raw.githubusercontent.com/gpocs/quarkus-otel-example/refs/heads/master/orderservice/src/main/kube/orderservice.yaml
 
-
+kubectl apply -f https://raw.githubusercontent.com/gpocs/quarkus-otel-example/refs/heads/master/orderservice/src/main/kube/orderservice-ingress.yaml
 ```
